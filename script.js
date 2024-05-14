@@ -4,6 +4,8 @@
 // on user interactions need to ensure that the
 // initial DOM structure is ready before running
 // JavaScript.
+// further reading: https://sentry.io/answers/whats-the-difference-between-the-window-load-event-and-the-document-domcontentloaded-event/
+
 document.addEventListener("DOMContentLoaded", () => {
   // products array
   const products = [
@@ -26,13 +28,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const checkoutButton = document.getElementById("checkout");
   const transactionsContainer = document.getElementById("transactions");
 
-  // function to create and append div element for each product item
-  // including the product details and buttons with event listeners for
-  // adding the product to the cart
+  // Function to create and append div element for each product item added to the DOM
+  // including the product details and buttons with event listeners.
+  // Passing product as the parameter to the addProductToDom function
   function addProductToDOM(product) {
     const productDiv = document.createElement("div");
+    // Setting the html elements inside the product div element
+    // Using Tailwind syntax applied to the product container element
     productDiv.className =
       "p-4 bg-white rounded shadow-lg flex flex-col items-center justify-center";
+    // HTML elements with Tailwind applied to elements inside the container element
+    // using string literals to code the html elements dynamically, thereby rendering the object's properties including
+    // name, price, and id
+    // lastly we create two buttons; the 'Add 1 to Cart' button and the 'Add Multiple to Cart' button
     productDiv.innerHTML = `
             <h3 class="text-lg font-bold mb-2">${product.name}</h3>
             <p class="mb-2">$${product.price}</p>
@@ -42,12 +50,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 <button class="add-multiple px-4 py-2 bg-blue-700 text-white font-bold rounded hover:bg-blue-800 cursor-pointer">Add Multiple to Cart</button>
             </div>
         `;
+    // use .querySelector to target the html element with class named .add-single
+    // use .addEventListener to detect a click and trigger the addToCart() function with
+    // the argument product.id passed into; false for add-single quantity and true for add-multiple quantity
     productDiv
       .querySelector(".add-single")
       .addEventListener("click", () => addToCart(product.id, false));
     productDiv
       .querySelector(".add-multiple")
       .addEventListener("click", () => addToCart(product.id, true));
+    //
     productsContainer.appendChild(productDiv);
   }
   // function to update the cart when new items and quantities are added
@@ -171,7 +183,10 @@ document.addEventListener("DOMContentLoaded", () => {
           item.quantity = updatedItem.quantity; // Update quantity
         }
       });
-
+      // the accumulator or acc holds the accumulated value from previous iterations
+      // the item is the curren item being processed in the array
+      // the anonymous function calculates the total price for the current item then
+      // adds this value ti the acc
       transaction.grandTotal = transaction.orderDetails.reduce(
         (acc, item) => acc + item.unitPrice * item.quantity,
         0
@@ -183,7 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     }
   }
-  // function to display transactions record
+  // function to display transactions record or refreshing the display of transactions
   function displayTransactions() {
     transactionsContainer.innerHTML = "";
     transactions.forEach((transaction) => displayTransaction(transaction));
