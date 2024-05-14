@@ -1,12 +1,24 @@
+// using the DOMContentLoaded event to ensure
+// the script runs after the DOM is fully loaded
+// Web pages that load content dynamically based
+// on user interactions need to ensure that the
+// initial DOM structure is ready before running
+// JavaScript.
 document.addEventListener("DOMContentLoaded", () => {
+  // products array
   const products = [
     { id: 1, name: "Product A", price: 20 },
     { id: 2, name: "Product B", price: 30 },
     { id: 3, name: "Product C", price: 40 },
   ];
+
+  // create an empty named cart
   const cart = [];
+
+  // create an empty array named transactions
   let transactions = [];
 
+  // assigning html elements by Id
   const productsContainer = document.getElementById("products");
   const cartItemsEl = document.getElementById("cart-items");
   const cartTotalEl = document.getElementById("cart-total");
@@ -14,6 +26,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const checkoutButton = document.getElementById("checkout");
   const transactionsContainer = document.getElementById("transactions");
 
+  // function to create and append div element for each product item
+  // including the product details and buttons with event listeners for
+  // adding the product to the cart
   function addProductToDOM(product) {
     const productDiv = document.createElement("div");
     productDiv.className =
@@ -35,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .addEventListener("click", () => addToCart(product.id, true));
     productsContainer.appendChild(productDiv);
   }
-
+  // function to update the cart when new items and quantities are added
   function updateCart() {
     cartItemsEl.innerHTML = "";
     cart.forEach((item) => {
@@ -49,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
     );
     cartTotalEl.textContent = `Total: $${total}`;
   }
-
+  // function to add product item to card
   function addToCart(productId, isMultiple) {
     const quantityInput = document.getElementById(`qty-${productId}`);
     const quantity = isMultiple ? parseInt(quantityInput.value) : 1;
@@ -62,12 +77,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     updateCart();
   }
-
+  // function to clear cart items
   function clearCart() {
     cart.length = 0;
     updateCart();
   }
-
+  // function to confirm transaction to record
   function checkout() {
     const transactionId = Date.now();
     const date = new Date().toISOString();
@@ -86,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
     displayTransaction(transaction);
     clearCart();
   }
-
+  // function to display transaction
   function displayTransaction(transaction) {
     const transactionDiv = document.createElement("div");
     transactionDiv.className = "mb-4 p-2 border border-gray-300 rounded";
@@ -116,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
     transactionDiv.appendChild(editButton);
     transactionsContainer.appendChild(transactionDiv);
   }
-
+  // function to edit transaction details
   function editTransaction(transactionId) {
     const transaction = transactions.find(
       (t) => t.transactionId === transactionId
@@ -168,13 +183,16 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     }
   }
-
+  // function to display transactions record
   function displayTransactions() {
     transactionsContainer.innerHTML = "";
     transactions.forEach((transaction) => displayTransaction(transaction));
   }
 
+  // for every product in the products array add the product to the DOM
   products.forEach((product) => addProductToDOM(product));
+
+  // Multiple Event Listeners
   clearCartButton.addEventListener("click", clearCart);
   checkoutButton.addEventListener("click", checkout);
 });

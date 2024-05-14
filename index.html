@@ -7,20 +7,28 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="bg-gray-100">
+    <!-- Create a container element  -->
     <div class="container mx-auto px-4 py-2">
+      <!-- Create a title element -->
       <h1 class="text-2xl font-bold text-center my-4">Chrome & Burger EPOS</h1>
+      <!-- Create a Products Menu element -->
       <div id="products" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+
       <h2 class="text-xl font-bold my-4">Your Cart</h2>
+      <!-- Create a Cart element -->
       <div id="cart" class="bg-white p-4 rounded shadow">
         <ul id="cart-items" class="list-disc"></ul>
         <p id="cart-total" class="text-lg font-bold mt-4">Total: $0</p>
+
         <div class="flex justify-between">
+          <!-- Create a Clear Cart button -->
           <button
             id="clear-cart"
             class="px-4 py-2 bg-red-500 text-white font-bold rounded hover:bg-red-700 cursor-pointer"
           >
             Clear Cart
           </button>
+          <!-- Create a Checkout button -->
           <button
             id="checkout"
             class="px-4 py-2 bg-green-500 text-white font-bold rounded hover:bg-green-700 cursor-pointer"
@@ -30,6 +38,7 @@
         </div>
       </div>
       <h2 class="text-xl font-bold my-4">Transaction Details</h2>
+      <!-- Create a Transactions Record element-->
       <div id="transactions" class="bg-white p-4 rounded shadow mt-4"></div>
     </div>
     <script src="script.js"></script>
